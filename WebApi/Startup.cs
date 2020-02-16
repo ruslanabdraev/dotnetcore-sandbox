@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
 
 namespace WebApi
 {
@@ -30,6 +31,7 @@ namespace WebApi
         {
             services.AddControllers();
             services.AddDabaseContext(Configuration)
+                .AddMapper()
                 .AddBusinessLayer();
         }
 
@@ -58,6 +60,12 @@ namespace WebApi
 
     public static class Extensions
     {
+        public static IServiceCollection AddMapper(this IServiceCollection services)
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            return services.AddAutoMapper(mapperConfig => mapperConfig.AddProfile<AppMappingProfile>(), assemblies);
+        }
+
         public static IServiceCollection AddDabaseContext(this IServiceCollection services, IConfiguration config)
         {
             var connection = config.GetConnectionString("DatabaseContext");

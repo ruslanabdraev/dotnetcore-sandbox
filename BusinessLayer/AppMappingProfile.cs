@@ -10,9 +10,9 @@ namespace BusinessLayer
     {
         public AppMappingProfile()
         {
-            CreateMap<Contract.Task, Entities.Task>()
-                .ForMember(c => c.TaskId, o => o.MapFrom(o => o.Id))
-                .ForMember(c => c.TaskName, o => o.MapFrom(o => o.Name));
+            CreateMap<Entities.Task, Contract.Task>()
+                .ForMember(c => c.Id, o => o.MapFrom(o => o.TaskId))
+                .ForMember(c => c.Name, o => o.MapFrom(o => o.TaskName));
         }
     }
 }
