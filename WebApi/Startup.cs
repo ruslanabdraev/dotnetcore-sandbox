@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer;
+using DataAccessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +29,8 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddBusinessLayer();
+            services.AddDabaseContext(Configuration)
+                .AddBusinessLayer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +58,18 @@ namespace WebApi
 
     public static class Extensions
     {
+        public static IServiceCollection AddDabaseContext(this IServiceCollection services, IConfiguration config)
+        {
+            var connection = config.GetConnectionString("DatabaseContext");
+
+            services.AddDbContext<TaskContext>((optionsBuilder) =>
+            {
+                optionsBuilder.UseSqlServer(connection);
+            });
+
+            return services;
+        }
+
         public static IServiceCollection AddBusinessLayer(this IServiceCollection services)
         {
             return services.AddScoped<ITaskService, TaskService>();
