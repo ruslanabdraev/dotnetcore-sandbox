@@ -22,7 +22,7 @@ namespace WebApi.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
-        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(string[]))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Task[]))]
         public async Task<IActionResult> GetTasks()
         {
             return Ok(await _taskService.GetTasksAsync());

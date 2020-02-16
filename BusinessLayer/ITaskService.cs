@@ -7,6 +7,6 @@ namespace BusinessLayer
 {
     public interface ITaskService
     {
-        Task<string[]> GetTasksAsync();
+        Task<Contract.Task[]> GetTasksAsync();
     }
 }

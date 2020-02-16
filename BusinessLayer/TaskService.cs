@@ -7,11 +7,11 @@ namespace BusinessLayer
 {
     public class TaskService : ITaskService
     {
-        public async Task<string[]> GetTasksAsync()
+        public async Task<Contract.Task[]> GetTasksAsync()
         {
-            return await Task.Run(() => new string[]
+            return await Task.Run(() => new Contract.Task[]
                 {
-                    "task1", "task2"
+                    new Contract.Task{Id=1, Name="Task1" }, new Contract.Task{Id=2, Name="Task2" }
                 });
         }
     }
