@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddBusinessLayer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +48,16 @@ namespace WebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+
+    }
+
+    public static class Extensions
+    {
+        public static IServiceCollection AddBusinessLayer(this IServiceCollection services)
+        {
+            return services.AddScoped<ITaskService, TaskService>();
         }
     }
 }
